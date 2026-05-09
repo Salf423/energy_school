@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicio de Control - Energy School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="assets/img/logo.png" alt="Energy School Logo" style="height: 40px; width: auto;">
+            <h1 class="brand-title" style="margin: 0; font-size: 1.5rem;">Energy School</h1>
+        </div>
+        <div class="nav-links" id="dynamic-nav-links">
+            <!-- Renderizado dinámicamente -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="animate-on-scroll" style="text-align: center; margin-bottom: 3rem;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Detección de Dispositivos</h2>
+            <p style="color: var(--color-cian-electrico);">Escanea la red local y detecta los dispositivos inteligentes cercanos (IoT).</p>
+        </header>
+
+        <!-- Panel de Escaneo -->
+        <div class="dashboard-card animate-on-scroll" style="text-align: center; margin-bottom: 3rem;">
+            <h3 style="margin-bottom: 1.5rem;">Buscando Hardware Iot...</h3>
+            <div style="display: flex; justify-content: center; gap: 1rem;">
+                <button><span></span>Escanear Red</button>
+            </div>
+        </div>
+
+        <!-- Lista de Dispositivos Detectados -->
+        <h3 class="animate-on-scroll" style="margin-bottom: 1.5rem;">Dispositivos Cercanos</h3>
+        
+        <div class="grid-dashboard">
+            
+            <div class="dashboard-card animate-on-scroll">
+                <h4>Aire Acondicionado (AC-Lab)</h4>
+                <p style="color: var(--color-cian-electrico); margin-bottom: 1rem;">Laboratorio de Ciencias</p>
+                <div style="display: flex; gap: 1rem;">
+                    <button><span></span>ON</button>
+                    <button class="btn-alert"><span></span>OFF</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card animate-on-scroll">
+                <h4>Panel de Luces (L-Sala2)</h4>
+                <p style="color: var(--color-cian-electrico); margin-bottom: 1rem;">Sala 2 - Química</p>
+                <div style="display: flex; gap: 1rem;">
+                    <button><span></span>ON</button>
+                    <button class="btn-alert"><span></span>OFF</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card animate-on-scroll">
+                <h4>Proyector Principal (P-Audi)</h4>
+                <p style="color: var(--color-cian-electrico); margin-bottom: 1rem;">Auditorio Central</p>
+                <div style="display: flex; gap: 1rem;">
+                    <button><span></span>ON</button>
+                    <button class="btn-alert"><span></span>OFF</button>
+                </div>
+            </div>
+
+        </div>
+        <div style="height: 200px;"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="assets/img/logo.png" alt="Energy School Logo">
+                    <h4 style="margin: 0;">Energy School</h4>
+                </div>
+                <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 1rem;">Plataforma inteligente para la optimización y control energético escolar.</p>
+                <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+                    <label for="newsletter-control" style="color: var(--color-cian-electrico); font-size: 0.85rem;">Contacto/Boletín:</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="email" id="newsletter-control" placeholder="correo@ejemplo.com" style="padding: 0.5rem; border-radius: 4px; border: 1px solid rgba(0, 210, 255, 0.3); background: rgba(255,255,255,0.05); color: white; width: 100%;">
+                        <button style="padding: 0.5rem 1rem; font-size: 0.9rem;"><span></span>Ok</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="support.html">Soporte Técnico</a></li>
+                    <li><a href="policies.html">Términos y Condiciones</a></li>
+                    <li><a href="contact.html">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Redes Sociales</h4>
+                <div class="footer-socials">
+                    <a href="#" title="Facebook">FB</a>
+                    <a href="#" title="Instagram">IG</a>
+                    <a href="#" title="GitHub">GH</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Energy School. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+    <script src="authService.js"></script>
+    <script src="iotService.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,571 @@
+/**
+ * @file styles.css
+ * @description Sistema de diseño y variables CSS para el Frontend de Energy School.
+ * Estilo visual: Neón minimalista, glossy, alta tecnología y sostenibilidad moderna.
+ */
+
+:root {
+  /* Paleta de Colores Base */
+  --color-negro-profundo: #000000;
+  --color-blanco-puro: #FFFFFF;
+  --color-verde-neon: #D4FF00;
+  --color-cian-electrico: #00D2FF;
+  --color-azul-profundo: #0080A5;
+  --color-naranja-vibrante: #FF9500;
+  --color-amarillo: #FFD700;
+
+  /* Gradientes y Acentos */
+  --gradiente-marca: linear-gradient(135deg, var(--color-verde-neon) 0%, var(--color-cian-electrico) 50%, var(--color-azul-profundo) 100%);
+  --alerta-energia: var(--color-naranja-vibrante);
+  
+  /* Efectos Glossy y Glow */
+  --glow-sutil: 0 0 15px rgba(0, 210, 255, 0.4);
+  --glow-intenso: 0 0 25px rgba(212, 255, 0, 0.6);
+  --superficie-glossy: rgba(255, 255, 255, 0.05);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-negro-profundo);
+  color: var(--color-blanco-puro);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* =========================================
+   Componentes de Interfaz - Contenedores
+   ========================================= */
+.dashboard-card {
+  background: var(--superficie-glossy);
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px); /* Efecto vidrio/glossy */
+  box-shadow: var(--glow-sutil);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+  border-color: var(--color-cian-electrico);
+}
+
+/* =========================================
+   Notificaciones Inteligentes (Alertas)
+   ========================================= */
+.alert-notification {
+  background-color: rgba(255, 149, 0, 0.1);
+  border-left: 4px solid var(--alerta-energia);
+  color: var(--color-blanco-puro);
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 0 15px rgba(255, 149, 0, 0.3); /* Glow naranja */
+}
+
+/* =========================================
+   Botones de Control
+   (Basado en las especificaciones del diseño)
+   ========================================= */
+button {
+  border: none;
+  display: block;
+  position: relative;
+  padding: 0.7em 2.4em;
+  font-size: 18px;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  color: var(--color-cian-electrico); /* Adaptado a la paleta */
+  z-index: 1;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+button span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: -1;
+  border: 2px solid var(--color-cian-electrico); /* Borde luminoso */
+  border-radius: 6px; /* Bordes lisos y modernos */
+  box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.2), 0 0 10px rgba(0, 210, 255, 0.2);
+}
+
+button span::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 8%;
+  height: 500%;
+  background: var(--color-negro-profundo); /* Contraste oscuro para el efecto de barrido */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-60deg);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+button:hover span::before {
+  transform: translate(-50%, -50%) rotate(-90deg);
+  width: 100%;
+  background: var(--color-cian-electrico);
+}
+
+button:hover {
+  color: var(--color-negro-profundo); /* Texto oscuro al tener fondo cian */
+  text-shadow: none;
+}
+
+button:active span::before {
+  background: var(--color-azul-profundo);
+}
+
+/* Variante de Botón de Alerta / Emergencia */
+button.btn-alert {
+  color: var(--color-naranja-vibrante);
+}
+
+button.btn-alert span {
+  border-color: var(--color-naranja-vibrante);
+  box-shadow: inset 0 0 10px rgba(255, 149, 0, 0.2), 0 0 10px rgba(255, 149, 0, 0.2);
+}
+
+button.btn-alert:hover span::before {
+  background: var(--color-naranja-vibrante);
+}
+
+/* Títulos y Gradientes de Texto */
+h1.brand-title {
+  background: var(--gradiente-marca);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 800;
+}
+
+/* =========================================
+   Layout Utilities & Navigation
+   ========================================= */
+.container {
+  max-width: 1200px;
+  padding: 2rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: var(--color-blanco-puro);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--color-verde-neon);
+  text-shadow: var(--glow-intenso);
+}
+
+.grid-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* =========================================
+   Formularios y Auth (Login)
+   ========================================= */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-cian-electrico);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-family: inherit;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-verde-neon);
+  box-shadow: 0 0 10px rgba(212, 255, 0, 0.3);
+}
+
+/* =========================================
+   Animaciones de Scroll (IntersectionObserver)
+   ========================================= */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, visibility;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================
+   Modal de Detalles del Salón
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: var(--superficie-glossy);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: var(--color-blanco-puro);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  color: var(--color-naranja-vibrante);
+  text-shadow: none;
+}
+
+.modal-close span {
+  display: none;
+}
+
+.modal-title {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: var(--color-cian-electrico);
+}
+
+.modal-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-stat:last-of-type {
+  border-bottom: none;
+  margin-bottom: 1.5rem;
+}
+
+.modal-stat-label {
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.modal-stat-value {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.modal-controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.modal-controls button {
+  flex: 1;
+  font-size: 14px;
+  padding: 0.8em 1em;
+}
+
+/* =========================================
+   Footer
+   ========================================= */
+footer {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(0, 210, 255, 0.2);
+  padding: 3rem 2rem 1.5rem;
+  margin-top: 4rem;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.footer-logo img {
+  height: 40px;
+}
+
+.footer-col h4 {
+  color: var(--color-cian-electrico);
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-col ul a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-col ul a:hover {
+  color: var(--color-verde-neon);
+  text-shadow: var(--glow-sutil);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-socials a {
+  color: var(--color-blanco-puro);
+  background: rgba(255, 255, 255, 0.05);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  transition: all 0.3s;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer-socials a:hover {
+  background: var(--color-cian-electrico);
+  color: var(--color-negro-profundo);
+  transform: translateY(-3px);
+  box-shadow: var(--glow-sutil);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   User Menu Dropdown (Nav)
+   ========================================= */
+.user-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.user-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
+  color: var(--color-blanco-puro);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.user-profile-btn:hover {
+  background: rgba(0, 210, 255, 0.2);
+  border-color: var(--color-cian-electrico);
+}
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  background: var(--gradiente-marca);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: var(--color-negro-profundo);
+  font-size: 0.9rem;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  border-radius: 12px;
+  width: 220px;
+  padding: 0.5rem 0;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.user-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-header {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-header p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.dropdown-header h5 {
+  margin: 0.2rem 0 0;
+  color: var(--color-blanco-puro);
+  font-size: 1rem;
+}
+
+.user-dropdown a, .user-dropdown button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.7rem 1.2rem;
+  color: #ccc;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: normal;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.user-dropdown a:hover, .user-dropdown button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-verde-neon);
+}
+
+.user-dropdown .logout-link {
+  color: var(--color-naranja-vibrante);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0.5rem;
+}
+
+.user-dropdown .logout-link:hover {
+  background: rgba(255, 149, 0, 0.1);
+  color: #ffaa33;
+}
