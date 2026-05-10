@@ -176,13 +176,13 @@ function updateNavigation() {
             <div class="user-menu-container">
                 <button class="user-profile-btn" id="user-menu-btn">
                     <div class="user-avatar">A</div>
-                    <span>Admin</span>
-                    <small>▼</small>
+                    <small style="margin-left: 5px; opacity: 0.7;">▼</small>
                 </button>
                 <div class="user-dropdown" id="user-dropdown-menu">
                     <div class="dropdown-header">
-                        <p>Sesión iniciada como</p>
-                        <h5>admin@energyschool.edu</h5>
+                        <p style="margin-bottom: 0.2rem;">Sesión iniciada como</p>
+                        <h5 style="margin: 0;">admin@energyschool.edu</h5>
+                        <span style="font-size: 0.75rem; color: var(--color-cian-electrico); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: block; margin-top: 5px;">Administrador</span>
                     </div>
                     <a href="#">Mi Perfil</a>
                     <a href="#">Configuración</a>
