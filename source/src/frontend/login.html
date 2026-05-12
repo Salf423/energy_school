@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Energy School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+
+    <nav>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="assets/img/logo.png" alt="Energy School Logo" style="height: 40px; width: auto;">
+            <h1 class="brand-title" style="margin: 0; font-size: 1.5rem;">Energy School</h1>
+        </div>
+        <!-- En login el nav-links puede ir vacío o mostrar botón para volver -->
+        <div class="nav-links" id="dynamic-nav-links" style="position: absolute; right: 2rem;">
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        
+        <div class="dashboard-card auth-card animate-on-scroll">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Acceso al Sistema</h2>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" class="form-control" placeholder="admin@energyschool.edu" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña de Operador</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <div style="margin-top: 2.5rem;">
+                    <button type="submit" style="width: 100%;">
+                        <span></span>Ingresar
+                    </button>
+                </div>
+            </form>
+            
+            <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem;">
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 0.5rem;">¿No tienes cuenta? <a href="#" id="open-register-modal" style="color: var(--color-verde-neon); text-decoration: none; font-weight: bold;">Regístrate aquí</a></p>
+                <p style="color: rgba(255,255,255,0.5);">Sistema de optimización energética de alta seguridad.</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Modal de Registro -->
+    <div id="register-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="close-register-modal">&times;<span>Cerrar</span></button>
+            <h3 class="modal-title">Crear Nueva Cuenta</h3>
+            
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-name">Nombre Completo</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="Ej. Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-role">Rol Institucional</label>
+                    <select id="reg-role" class="form-control" style="background: rgba(255, 255, 255, 0.05); color: white;">
+                        <option value="docente">Docente</option>
+                        <option value="administrativo">Administrativo</option>
+                        <option value="estudiante">Estudiante</option>
+                        <option value="operador">Operador de Energía</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-email">Correo Electrónico</label>
+                    <input type="email" id="reg-email" class="form-control" placeholder="usuario@escuela.edu" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-password">Contraseña</label>
+                    <input type="password" id="reg-password" class="form-control" placeholder="Mínimo 6 caracteres" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-password-confirm">Confirmar Contraseña</label>
+                    <input type="password" id="reg-password-confirm" class="form-control" placeholder="Repite tu contraseña" required>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button type="submit" style="width: 100%;">
+                        <span></span>Registrarse
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="assets/img/logo.png" alt="Energy School Logo">
+                    <h4 style="margin: 0;">Energy School</h4>
+                </div>
+                <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 1rem;">Plataforma inteligente para la optimización y control energético escolar.</p>
+                <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+                    <label for="newsletter-login" style="color: var(--color-cian-electrico); font-size: 0.85rem;">Contacto/Boletín:</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="email" id="newsletter-login" placeholder="correo@ejemplo.com" style="padding: 0.5rem; border-radius: 4px; border: 1px solid rgba(0, 210, 255, 0.3); background: rgba(255,255,255,0.05); color: white; width: 100%;">
+                        <button style="padding: 0.5rem 1rem; font-size: 0.9rem;"><span></span>Ok</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="support.html">Soporte Técnico</a></li>
+                    <li><a href="policies.html">Términos y Condiciones</a></li>
+                    <li><a href="contact.html">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Redes Sociales</h4>
+                <div class="footer-socials">
+                    <a href="#" title="Facebook">FB</a>
+                    <a href="#" title="Instagram">IG</a>
+                    <a href="https://github.com/Salf423/" title="GitHub">GH</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Energy School. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+    <script src="authService.js"></script>
+    <script src="iotService.js"></script>
+    <script src="main.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

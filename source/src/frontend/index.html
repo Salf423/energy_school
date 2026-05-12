@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Energy School</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="assets/img/logo.png" alt="Energy School Logo" style="height: 40px; width: auto;">
+            <h1 class="brand-title" style="margin: 0; font-size: 1.5rem;">Energy School</h1>
+        </div>
+        <div class="nav-links" id="dynamic-nav-links">
+            <!-- Renderizado dinámicamente -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Dashboard Header -->
+        <header class="animate-on-scroll">
+            <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Monitoreo en Tiempo Real</h2>
+            <p style="color: var(--color-cian-electrico); margin-bottom: 2rem;">Visualiza el consumo eléctrico de los salones y optimiza el uso de energía.</p>
+        </header>
+
+        <!-- Alertas -->
+        <div class="alert-notification animate-on-scroll" style="margin-bottom: 2rem;">
+            <strong>Aviso de IA:</strong> Texto de prueba.
+        </div>
+
+        <!-- Grid de Salones -->
+        <div class="grid-dashboard">
+            
+            <div class="dashboard-card animate-on-scroll">
+                <h3>Salón 1 - F</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--color-verde-neon);">1.2 kWh</p>
+                <p>Estado: Ocupado</p>
+                <div style="margin-top: 1rem;">
+                    <button><span></span>Ver Detalles</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card animate-on-scroll">
+                <h3>Salón 2 - M</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--color-verde-neon);">0.8 kWh</p>
+                <p>Estado: Ocupado</p>
+                <div style="margin-top: 1rem;">
+                    <button><span></span>Ver Detalles</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card animate-on-scroll" style="border-color: var(--color-naranja-vibrante);">
+                <h3>Salón 4 - I</h3>
+                <p style="font-size: 2rem; font-weight: bold; color: var(--color-naranja-vibrante);">3.5 kWh</p>
+                <p>Estado: <span style="color: var(--color-naranja-vibrante);">Desocupado (Luces Encendidas)</span></p>
+                <div style="margin-top: 1rem;">
+                    <button class="btn-alert"><span></span>Apagar Remotamente</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card animate-on-scroll" style="border-color: var(--color-amarillo);">
+                <h3>Salón 3 - A (Modo Reposo)</h3>
+                <p id="consumo-fantasma-salon-3" style="font-size: 2rem; font-weight: bold; color: var(--color-amarillo);">0.04 kWh</p>
+                <p>Estado: <span style="color: var(--color-amarillo);">Dispositivos Apagados (Consumo Fantasma detectado)</span></p>
+                <div style="margin-top: 1rem;">
+                    <button class="btn-alert"><span></span>Cortar Energía Total</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sección Adicional para mostrar scroll -->
+        <div class="animate-on-scroll" style="margin-top: 150px; padding: 3rem; background: var(--superficie-glossy); border-radius: 12px; text-align: center;">
+            <h3 style="color: var(--color-azul-profundo); margin-bottom: 1rem;">Inteligencia Artificial Activa</h3>
+            <p>Nuestros modelos están analizando los patrones de consumo. Se espera reducir un 15% del gasto energético este mes.</p>
+        </div>
+        <div style="height: 100px;"></div>
+    </div>
+
+    <!-- Modal Base (Template) -->
+    <div id="room-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal">&times;<span>Cerrar</span></button>
+            <h3 class="modal-title" id="modal-room-title">Salón</h3>
+            
+            <div class="modal-stat">
+                <span class="modal-stat-label">Consumo Actual</span>
+                <span class="modal-stat-value" id="modal-consumption" style="color: var(--color-verde-neon);">-- kWh</span>
+            </div>
+            
+            <div class="modal-stat">
+                <span class="modal-stat-label">Estado</span>
+                <span class="modal-stat-value" id="modal-status">--</span>
+            </div>
+            
+            <div class="modal-stat">
+                <span class="modal-stat-label">Dispositivos Activos</span>
+                <span class="modal-stat-value" id="modal-devices">--</span>
+            </div>
+            
+            <div class="modal-controls">
+                <button id="modal-btn-on" style="color: var(--color-cian-electrico);"><span></span>Encender Todo</button>
+                <button id="modal-btn-off" class="btn-alert"><span></span>Apagar Todo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="assets/img/logo.png" alt="Energy School Logo">
+                    <h4 style="margin: 0;">Energy School</h4>
+                </div>
+                <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 1rem;">Plataforma inteligente para la optimización y control energético escolar.</p>
+                <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+                    <label for="newsletter-index" style="color: var(--color-cian-electrico); font-size: 0.85rem;">Contacto/Boletín:</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="email" id="newsletter-index" placeholder="correo@ejemplo.com" style="padding: 0.5rem; border-radius: 4px; border: 1px solid rgba(0, 210, 255, 0.3); background: rgba(255,255,255,0.05); color: white; width: 100%;">
+                        <button style="padding: 0.5rem 1rem; font-size: 0.9rem;"><span></span>Ok</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="support.html">Soporte Técnico</a></li>
+                    <li><a href="policies.html">Términos y Condiciones</a></li>
+                    <li><a href="contact.html">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Redes Sociales</h4>
+                <div class="footer-socials">
+                    <a href="#" title="Facebook">FB</a>
+                    <a href="#" title="Instagram">IG</a>
+                    <a href="https://github.com/Salf423/" title="GitHub">GH</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Energy School. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+    <script src="authService.js"></script>
+    <script src="iotService.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

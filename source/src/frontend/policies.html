@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Políticas y Términos - Energy School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="assets/img/logo.png" alt="Energy School Logo" style="height: 40px; width: auto;">
+            <h1 class="brand-title" style="margin: 0; font-size: 1.5rem;">Energy School</h1>
+        </div>
+        <div class="nav-links" id="dynamic-nav-links">
+            <!-- Renderizado dinámicamente por main.js -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="animate-on-scroll" style="margin-bottom: 3rem;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--color-cian-electrico);">Políticas de Uso y Términos</h2>
+            <p style="color: #ccc;">Aclaraciones y condiciones generales sobre el uso de nuestra plataforma de optimización energética.</p>
+        </header>
+
+        <div class="dashboard-card animate-on-scroll" style="margin-bottom: 2rem;">
+            <h3 style="color: var(--color-verde-neon); margin-bottom: 1rem;">1. Aclaraciones Generales</h3>
+            <p style="line-height: 1.6; color: #eee; margin-bottom: 1rem;">
+                Energy School es una plataforma diseñada para el monitoreo y control de dispositivos en entornos escolares. 
+                Los datos de consumo energético son estimaciones basadas en los dispositivos registrados y pueden variar respecto 
+                a la facturación real del proveedor de energía.
+            </p>
+        </div>
+
+        <div class="dashboard-card animate-on-scroll" style="margin-bottom: 2rem;">
+            <h3 style="color: var(--color-verde-neon); margin-bottom: 1rem;">2. Términos y Condiciones</h3>
+            <p style="line-height: 1.6; color: #eee; margin-bottom: 1rem;">
+                El uso de las herramientas de control remoto (encendido/apagado de dispositivos) es responsabilidad del operador asignado. 
+                Energy School no se hace responsable por apagados accidentales que puedan interrumpir las actividades escolares. 
+                Al acceder a este sistema, el operador acepta estas condiciones de uso.
+            </p>
+        </div>
+
+        <div class="dashboard-card animate-on-scroll" style="margin-bottom: 2rem;">
+            <h3 style="color: var(--color-verde-neon); margin-bottom: 1rem;">3. Privacidad de Datos</h3>
+            <p style="line-height: 1.6; color: #eee; margin-bottom: 1rem;">
+                Los datos recopilados sobre horarios escolares y hábitos de consumo se utilizan exclusivamente para entrenar los modelos de Inteligencia Artificial que optimizan el gasto eléctrico, y no son compartidos con terceros sin el consentimiento de la institución.
+            </p>
+        </div>
+        <div style="height: 50px;"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="assets/img/logo.png" alt="Energy School Logo">
+                    <h4 style="margin: 0;">Energy School</h4>
+                </div>
+                <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 1rem;">Plataforma inteligente para la optimización y control energético escolar.</p>
+                <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+                    <label for="newsletter-policies" style="color: var(--color-cian-electrico); font-size: 0.85rem;">Contacto/Boletín:</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="email" id="newsletter-policies" placeholder="correo@ejemplo.com" style="padding: 0.5rem; border-radius: 4px; border: 1px solid rgba(0, 210, 255, 0.3); background: rgba(255,255,255,0.05); color: white; width: 100%;">
+                        <button style="padding: 0.5rem 1rem; font-size: 0.9rem;"><span></span>Ok</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="support.html">Soporte Técnico</a></li>
+                    <li><a href="policies.html">Términos y Condiciones</a></li>
+                    <li><a href="contact.html">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Redes Sociales</h4>
+                <div class="footer-socials">
+                    <a href="#" title="Facebook">FB</a>
+                    <a href="#" title="Instagram">IG</a>
+                    <a href="https://github.com/Salf423/" title="GitHub">GH</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Energy School. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabaseClient.js"></script>
+    <script src="authService.js"></script>
+    <script src="iotService.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
