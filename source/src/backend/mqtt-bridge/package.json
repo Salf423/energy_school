@@ -1,0 +1,30 @@
+{
+  "name": "energy-school-mqtt-bridge",
+  "version": "2.0.0",
+  "description": "Puente MQTT → Supabase para Energy School. Recibe telemetría de ESP32 desde HiveMQ Cloud e inserta en Supabase. Desplegado como Web Service en Render.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "keywords": [
+    "mqtt",
+    "supabase",
+    "iot",
+    "hivemq",
+    "energy-monitoring",
+    "esp32",
+    "render"
+  ],
+  "author": "Energy School Team",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.0",
+    "mqtt": "^5.10.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

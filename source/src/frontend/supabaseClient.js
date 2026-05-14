@@ -4,8 +4,8 @@
  * Propósito: Proveer una instancia única del cliente para interactuar con la DB y Auth.
  */
 
-const SUPABASE_URL = 'https://fwzmxpjldbsqbudvucbi.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3em14cGpsZGJzcWJ1ZHZ1Y2JpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5MzM5MDgsImV4cCI6MjA5MjUwOTkwOH0.YdyduqweJlYoFyCJJTjmWbmU7mNIETckaYLaTzahJAM';
+const SUPABASE_URL = 'https://mfwdnpsqjugptzlpqgoc.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1md2RucHNxanVncHR6bHBxZ29jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2OTg1ODMsImV4cCI6MjA5NDI3NDU4M30.-lL5wQvgMszNdrCkyr94-Z3qYeGxdD9e9tCUnG4OzNE';
 
 let supabaseInstance = null;
 

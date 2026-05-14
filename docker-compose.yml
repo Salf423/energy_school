@@ -1,0 +1,73 @@
+# =============================================================
+# Energy School — Docker Compose
+# =============================================================
+# Orquesta dos servicios:
+#   1. mosquitto  → Broker MQTT (Eclipse Mosquitto v2)
+#   2. mqtt-bridge → Puente Node.js que lee MQTT y escribe en Supabase
+#
+# Uso:
+#   docker compose up -d          # Levantar en background
+#   docker compose logs -f        # Ver logs en tiempo real
+#   docker compose down           # Detener servicios
+# =============================================================
+
+services:
+  # ─────────────────────────────────────────────────────────
+  # SERVICIO 1: Broker MQTT (Eclipse Mosquitto)
+  # ─────────────────────────────────────────────────────────
+  # Recibe la telemetría de todos los ESP32 de la escuela
+  # y la distribuye a los suscriptores (mqtt-bridge).
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: energy-mosquitto
+    restart: unless-stopped
+    ports:
+      # Puerto MQTT estándar — Los ESP32 se conectan aquí
+      - "1883:1883"
+      # Puerto WebSocket — Útil para debugging desde navegador
+      - "9001:9001"
+    volumes:
+      # Configuración personalizada del broker
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      # Datos persistentes (mensajes retenidos, etc.)
+      - mosquitto_data:/mosquitto/data
+      # Logs del broker
+      - mosquitto_log:/mosquitto/log
+    # Health check para verificar que el broker está activo
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -t '$$SYS/#' -C 1 -W 3 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ─────────────────────────────────────────────────────────
+  # SERVICIO 2: Puente MQTT → Supabase (Node.js)
+  # ─────────────────────────────────────────────────────────
+  # Se suscribe al broker, valida los datos y los inserta
+  # en la tabla consumo_energia de Supabase.
+  mqtt-bridge:
+    build:
+      context: ./source/src/backend/mqtt-bridge
+      dockerfile: Dockerfile
+    container_name: energy-mqtt-bridge
+    restart: unless-stopped
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    environment:
+      # Dentro de Docker Compose, los servicios se comunican
+      # por nombre de servicio, no por localhost.
+      MQTT_BROKER_URL: mqtt://mosquitto:1883
+    env_file:
+      # Credenciales de Supabase y demás configuración
+      - ./source/src/backend/mqtt-bridge/.env
+
+# ─────────────────────────────────────────────────────────
+# VOLÚMENES PERSISTENTES
+# ─────────────────────────────────────────────────────────
+volumes:
+  mosquitto_data:
+    driver: local
+  mosquitto_log:
+    driver: local

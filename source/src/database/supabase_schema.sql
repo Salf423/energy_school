@@ -100,3 +100,38 @@ CREATE POLICY "Lectura de historial para todos los autenticados"
   ON public.consumo_historial FOR SELECT
   TO authenticated
   USING ( true );
+
+-- ========================================================
+-- 4. TABLA: consumo_energia
+-- Lecturas en tiempo real de los sensores PZEM-004T
+-- enviadas por los ESP32 a través del puente MQTT → Supabase.
+-- Separada de consumo_historial (que almacena datos agregados).
+-- ========================================================
+CREATE TABLE public.consumo_energia (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  salon_id UUID REFERENCES public.salones(id) ON DELETE CASCADE,
+  voltaje FLOAT,
+  corriente FLOAT,
+  potencia_w FLOAT NOT NULL,
+  energia_kwh FLOAT NOT NULL,
+  dispositivo TEXT CHECK (dispositivo IN ('luz', 'aire_acondicionado', 'enchufe')),
+  registrado_en TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, now())
+);
+
+-- Índice para consultas frecuentes por salón y fecha
+CREATE INDEX idx_consumo_energia_salon ON public.consumo_energia (salon_id, registrado_en DESC);
+
+-- Habilitar RLS
+ALTER TABLE public.consumo_energia ENABLE ROW LEVEL SECURITY;
+
+-- Los usuarios autenticados del dashboard pueden leer las lecturas
+CREATE POLICY "Lectura de consumo para autenticados"
+  ON public.consumo_energia FOR SELECT
+  TO authenticated
+  USING ( true );
+
+-- Solo el backend (service_role) puede insertar lecturas desde el puente MQTT
+CREATE POLICY "Inserción desde service_role (backend MQTT)"
+  ON public.consumo_energia FOR INSERT
+  TO service_role
+  WITH CHECK ( true );

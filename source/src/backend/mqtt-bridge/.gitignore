@@ -1,0 +1,12 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (NUNCA subir credenciales a Git)
+.env
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
