@@ -17,7 +17,7 @@ WORKDIR /app
 # Si package.json no cambia, npm install no se re-ejecuta.
 COPY package.json package-lock.json* ./
 
-RUN npm ci --only=production --ignore-scripts
+RUN npm install --omit=dev --ignore-scripts
 
 # ── Etapa 2: Imagen final de producción ──
 FROM node:20-alpine
