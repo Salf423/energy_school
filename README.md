@@ -77,3 +77,24 @@
     - **Protocolo de Comunicación:** Los microcontroladores de los salones (ESP32/ESP8266) **no deben** comunicarse directamente con Supabase mediante HTTP. Deben enviar su telemetría a través del protocolo **MQTT** hacia el Broker central.
     - **Seguridad Eléctrica (Actuadores):** Para cargas de alta potencia como aires acondicionados, es **obligatorio** el uso de contactores magnéticos. Los relés de 5V de los microcontroladores solo se utilizarán como etapa de control (aislamiento galvánico) para activar dichos contactores. Usar relés pequeños directamente en cargas altas representa riesgo de incendio.
     - **Contenedores (Docker):** El backend intermedio (Broker MQTT y el _script puente_ de Node.js/Python hacia Supabase) debe ejecutarse obligatoriamente dentro de un entorno Docker utilizando `docker-compose`. Esto garantiza la portabilidad del servidor entre ambientes de desarrollo y despliegues _on-premise_ en la institución.
+
+---
+
+## ⚠️ Aclaraciones Técnicas Importantes
+
+### 1. Credenciales de HiveMQ Cloud (Crítico)
+Existe una distinción importante entre los dos tipos de credenciales en HiveMQ:
+- **Credenciales de Consola (Web):** Son las que usas para iniciar sesión en la página web de HiveMQ (ej. vía GitHub). **No funcionan** para conectar el código.
+- **Credenciales de Cluster (MQTT):** Deben crearse manualmente en la sección **Access Management** del panel de HiveMQ. Estas son las que se colocan en el archivo `.env` (`MQTT_USERNAME` y `MQTT_PASSWORD`) y en el código del ESP32.
+
+### 2. Despliegue en Render (Keep-Alive)
+El puente MQTT (`mqtt-bridge`) está configurado con un servidor **Express** básico. Esto es necesario porque Render apaga automáticamente los servicios gratuitos si no detectan un puerto HTTP abierto y tráfico activo. El servidor devuelve un estado de salud en la ruta `/` y `/health`.
+
+### 3. Conexión Segura (TLS)
+La conexión con HiveMQ Cloud **requiere obligatoriamente** el uso del puerto `8883` y el protocolo `mqtts://`. El uso del puerto `1883` (sin encriptar) será rechazado por el broker en la nube.
+
+### 4. Seguridad de Supabase
+El puente MQTT utiliza la **Service Role Key** de Supabase. Esta clave tiene privilegios de administrador y se salta las políticas de RLS. **Nunca debe ser expuesta en el frontend ni subida a repositorios públicos.** El archivo `.env` está protegido por `.gitignore`.
+
+---
+*Última actualización de infraestructura: Mayo 2026*
