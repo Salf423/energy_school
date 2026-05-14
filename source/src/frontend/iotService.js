@@ -29,6 +29,24 @@ const iotService = {
     },
 
     /**
+     * @function getSalones
+     * @purpose Obtiene la lista inicial de salones.
+     */
+    async getSalones() {
+        try {
+            const { data, error } = await window.supabaseClient
+                .from('salones')
+                .select('*')
+                .order('nombre');
+            if (error) throw error;
+            return { data, error: null };
+        } catch (error) {
+            console.error('Error obteniendo salones:', error.message);
+            return { data: [], error };
+        }
+    },
+
+    /**
      * @function getRealTimeStats
      * @purpose Se suscribe a los cambios en la tabla 'salones' para actualizar el dashboard.
      * @param {Function} callback - Función que se ejecuta al recibir un cambio.

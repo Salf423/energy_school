@@ -32,45 +32,11 @@
             <strong>Aviso de IA:</strong> Texto de prueba.
         </div>
 
-        <!-- Grid de Salones -->
-        <div class="grid-dashboard">
-            
-            <div class="dashboard-card animate-on-scroll">
-                <h3>Salón 1 - F</h3>
-                <p style="font-size: 2rem; font-weight: bold; color: var(--color-verde-neon);">1.2 kWh</p>
-                <p>Estado: Ocupado</p>
-                <div style="margin-top: 1rem;">
-                    <button><span></span>Ver Detalles</button>
-                </div>
-            </div>
-
-            <div class="dashboard-card animate-on-scroll">
-                <h3>Salón 2 - M</h3>
-                <p style="font-size: 2rem; font-weight: bold; color: var(--color-verde-neon);">0.8 kWh</p>
-                <p>Estado: Ocupado</p>
-                <div style="margin-top: 1rem;">
-                    <button><span></span>Ver Detalles</button>
-                </div>
-            </div>
-
-            <div class="dashboard-card animate-on-scroll" style="border-color: var(--color-naranja-vibrante);">
-                <h3>Salón 4 - I</h3>
-                <p style="font-size: 2rem; font-weight: bold; color: var(--color-naranja-vibrante);">3.5 kWh</p>
-                <p>Estado: <span style="color: var(--color-naranja-vibrante);">Desocupado (Luces Encendidas)</span></p>
-                <div style="margin-top: 1rem;">
-                    <button class="btn-alert"><span></span>Apagar Remotamente</button>
-                </div>
-            </div>
-
-            <div class="dashboard-card animate-on-scroll" style="border-color: var(--color-amarillo);">
-                <h3>Salón 3 - A (Modo Reposo)</h3>
-                <p id="consumo-fantasma-salon-3" style="font-size: 2rem; font-weight: bold; color: var(--color-amarillo);">0.04 kWh</p>
-                <p>Estado: <span style="color: var(--color-amarillo);">Dispositivos Apagados (Consumo Fantasma detectado)</span></p>
-                <div style="margin-top: 1rem;">
-                    <button class="btn-alert"><span></span>Cortar Energía Total</button>
-                </div>
-            </div>
-
+        <!-- Grid de Salones (Generado dinámicamente desde Supabase) -->
+        <div class="grid-dashboard" id="dashboard-grid">
+            <p style="text-align: center; color: var(--color-cian-electrico); grid-column: 1 / -1;">
+                Cargando salones desde la base de datos...
+            </p>
         </div>
 
         <!-- Sección Adicional para mostrar scroll -->

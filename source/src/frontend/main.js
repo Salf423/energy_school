@@ -11,15 +11,66 @@ document.addEventListener('DOMContentLoaded', () => {
     // Configurar navegación dinámica según estado de sesión
     updateNavigation();
     
+    // Cargar salones desde la base de datos
+    loadSalones();
+    
     // Iniciar monitoreo en tiempo real desde Supabase
     initRealTimeDashboard();
 
-    // Iniciar simulación de consumo fantasma (para dispositivos apagados)
+    // Iniciar simulación de consumo fantasma
     initGhostConsumptionSimulation();
-
-    // Inicializar Modal de Detalles/Control
-    initModal();
 });
+
+/**
+ * @function loadSalones
+ * @purpose Obtiene e inyecta los salones reales desde Supabase.
+ */
+async function loadSalones() {
+    if (!window.iotService) return;
+    
+    const { data: salones } = await window.iotService.getSalones();
+    const grid = document.getElementById('dashboard-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    
+    if (salones && salones.length > 0) {
+        salones.forEach(salon => {
+            const card = createSalonCard(salon);
+            grid.appendChild(card);
+        });
+        initModalEvents(); // Inicializar eventos de los botones recién creados
+        initScrollAnimations(); // Re-observar nuevas tarjetas
+    } else {
+        grid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">No hay salones en la base de datos.</p>';
+    }
+}
+
+/**
+ * @function createSalonCard
+ * @purpose Genera el HTML de una tarjeta de salón.
+ */
+function createSalonCard(salon) {
+    const div = document.createElement('div');
+    div.className = 'dashboard-card animate-on-scroll is-visible';
+    div.dataset.id = salon.id;
+    div.dataset.nombre = salon.nombre;
+    div.dataset.estado = salon.estado_energia ? 'on' : 'off';
+    
+    const borderColor = salon.estado_energia ? 'var(--color-verde-neon)' : 'var(--color-naranja-vibrante)';
+    div.style.borderColor = borderColor;
+    
+    div.innerHTML = `
+        <h3>${salon.nombre}</h3>
+        <p class="consumption-value" style="font-size: 2rem; font-weight: bold; color: ${borderColor};">${salon.consumo_actual.toFixed(3)} kWh</p>
+        <p class="status-text">Estado: <span style="color: ${borderColor};">${salon.estado_energia ? 'Activo' : 'Apagado'}</span></p>
+        <p style="font-size: 0.7rem; color: #888; font-family: monospace; margin-top: 0.5rem;" title="ID requerido para configuración IoT">ID: ${salon.id}</p>
+        <div style="margin-top: 1rem;">
+            <button class="${salon.estado_energia ? '' : 'btn-alert'}"><span></span>Controlar</button>
+        </div>
+    `;
+    return div;
+}
 
 /**
  * @function initRealTimeDashboard
@@ -36,24 +87,34 @@ function initRealTimeDashboard() {
 
 /**
  * @function updateSalonUI
- * @purpose Actualiza los elementos visuales de un salón específico en el dashboard.
+ * @purpose Actualiza los elementos visuales de un salón específico en el dashboard (Tiempo Real).
  */
 function updateSalonUI(salon) {
-    // Buscar la tarjeta del salón por algún identificador (aquí usamos el nombre como ejemplo)
-    const cards = document.querySelectorAll('.dashboard-card');
-    cards.forEach(card => {
-        const title = card.querySelector('h3').innerText;
-        if (title.includes(salon.nombre)) {
-            if (consumptionEl) consumptionEl.innerText = `${salon.consumo_actual.toFixed(3)} kWh`;
-            if (statusSpan) {
-                statusSpan.innerText = salon.estado_energia ? 'Activo' : 'Apagado';
-                statusSpan.style.color = salon.estado_energia ? 'var(--color-verde-neon)' : 'var(--color-naranja-vibrante)';
-                
-                // Actualizar atributos de datos para la simulación de consumo fantasma
-                card.dataset.estado = salon.estado_energia ? 'on' : 'off';
-            }
-        }
-    });
+    // Buscar la tarjeta usando el ID único en lugar del nombre
+    const card = document.querySelector(`.dashboard-card[data-id="${salon.id}"]`);
+    if (!card) return;
+    
+    const consumptionEl = card.querySelector('.consumption-value');
+    const statusSpan = card.querySelector('.status-text span');
+    const btn = card.querySelector('button');
+    
+    const borderColor = salon.estado_energia ? 'var(--color-verde-neon)' : 'var(--color-naranja-vibrante)';
+    card.style.borderColor = borderColor;
+    card.dataset.estado = salon.estado_energia ? 'on' : 'off';
+    
+    if (consumptionEl) {
+        consumptionEl.innerText = `${salon.consumo_actual.toFixed(3)} kWh`;
+        consumptionEl.style.color = borderColor;
+    }
+    
+    if (statusSpan) {
+        statusSpan.innerText = salon.estado_energia ? 'Activo' : 'Apagado';
+        statusSpan.style.color = borderColor;
+    }
+    
+    if (btn) {
+        btn.className = salon.estado_energia ? '' : 'btn-alert';
+    }
 }
 
 /**
@@ -87,37 +148,46 @@ function initGhostConsumptionSimulation() {
 }
 
 /**
- * @function initModal
- * @purpose Inicializa la lógica del modal de control remoto y detalles.
+ * @function initModalEvents
+ * @purpose Asigna los eventos de click a los botones de las tarjetas generadas dinámicamente.
  */
-function initModal() {
+function initModalEvents() {
     const modal = document.getElementById('room-modal');
     const closeBtn = document.getElementById('close-modal');
     if (!modal || !closeBtn) return;
 
     const cards = document.querySelectorAll('.dashboard-card');
     
+    // Remover eventos previos (si se vuelve a llamar)
+    const oldBtnOn = document.getElementById('modal-btn-on');
+    const oldBtnOff = document.getElementById('modal-btn-off');
+    const newBtnOn = oldBtnOn.cloneNode(true);
+    const newBtnOff = oldBtnOff.cloneNode(true);
+    oldBtnOn.parentNode.replaceChild(newBtnOn, oldBtnOn);
+    oldBtnOff.parentNode.replaceChild(newBtnOff, oldBtnOff);
+    
+    let currentSalonId = null;
+
     cards.forEach(card => {
         const btn = card.querySelector('button');
         if (btn) {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 
-                const title = card.querySelector('h3').innerText;
-                const consumption = card.querySelector('p:nth-of-type(1)').innerText;
-                const statusSpan = card.querySelector('p:nth-of-type(2) span') || card.querySelector('p:nth-of-type(2)');
-                const statusText = statusSpan.innerText;
-                const statusColor = getComputedStyle(card.querySelector('p:nth-of-type(1)')).color;
+                currentSalonId = card.dataset.id;
+                const title = card.dataset.nombre;
+                const isOff = card.dataset.estado === 'off';
+                const consumption = card.querySelector('.consumption-value').innerText;
+                const statusColor = getComputedStyle(card).borderColor;
 
-                // Actualizar Modal
+                // Actualizar Modal UI
                 document.getElementById('modal-room-title').innerText = title;
                 const consumoEl = document.getElementById('modal-consumption');
                 consumoEl.innerText = consumption;
                 consumoEl.style.color = statusColor;
+                document.getElementById('modal-status').innerText = isOff ? 'Apagado' : 'Activo';
                 
-                document.getElementById('modal-status').innerText = statusText;
-                
-                // Inferir dispositivos activos (Lógica de negocio simple)
+                // Lógica de inferencia
                 let devices = "Luces LED, AC apagado";
                 if (parseFloat(consumption) > 2) devices = "Luces, AC Activo, Proyector";
                 if (parseFloat(consumption) < 0.1) devices = "Ninguno (Consumo fantasma)";
@@ -128,25 +198,23 @@ function initModal() {
         }
     });
 
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    closeBtn.onclick = () => modal.classList.remove('active');
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
 
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
-
-    // Control de dispositivos mediante iotService
-    document.getElementById('modal-btn-off').addEventListener('click', async () => {
-        const title = document.getElementById('modal-room-title').innerText;
-        // En una app real, usaríamos el salonId real guardado en un data-attribute
-        alert(`Enviando señal de APAGADO a ${title}...`);
-        // await window.iotService.toggleDevice(salonId, false);
+    // Acciones Reales contra Supabase (Toggle)
+    newBtnOff.addEventListener('click', async () => {
+        if (!currentSalonId) return;
+        newBtnOff.innerHTML = 'Apagando...';
+        await window.iotService.toggleDevice(currentSalonId, false);
+        newBtnOff.innerHTML = '<span></span>Apagar Todo';
         modal.classList.remove('active');
     });
 
-    document.getElementById('modal-btn-on').addEventListener('click', async () => {
-        const title = document.getElementById('modal-room-title').innerText;
-        alert(`Enviando señal de ENCENDIDO a ${title}...`);
-        // await window.iotService.toggleDevice(salonId, true);
+    newBtnOn.addEventListener('click', async () => {
+        if (!currentSalonId) return;
+        newBtnOn.innerHTML = 'Encendiendo...';
+        await window.iotService.toggleDevice(currentSalonId, true);
+        newBtnOn.innerHTML = '<span></span>Encender Todo';
         modal.classList.remove('active');
     });
 }
