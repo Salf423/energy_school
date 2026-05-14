@@ -8,7 +8,7 @@
 # El puerto se inyecta vía la variable de entorno PORT.
 # =============================================================
 
-# ── Etapa 1: Instalar dependencias (capa cacheada) ──
+# ── Etapa 1: Instalar dependencias ──
 FROM node:22-alpine AS dependencies
 
 WORKDIR /app
@@ -20,7 +20,7 @@ COPY package.json package-lock.json* ./
 RUN npm install --omit=dev --ignore-scripts
 
 # ── Etapa 2: Imagen final de producción ──
-FROM node:20-alpine
+FROM node:22-alpine
 
 LABEL maintainer="Energy School Team"
 LABEL description="Puente MQTT (HiveMQ Cloud) a Supabase para monitoreo energético escolar"
