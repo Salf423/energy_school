@@ -9,7 +9,7 @@
 # =============================================================
 
 # ── Etapa 1: Instalar dependencias (capa cacheada) ──
-FROM node:20-alpine AS dependencies
+FROM node:22-alpine AS dependencies
 
 WORKDIR /app
 
