@@ -533,7 +533,10 @@ footer {
 .dropdown-header h5 {
   margin: 0.2rem 0 0;
   color: var(--color-blanco-puro);
-  font-size: 1rem;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-dropdown a, .user-dropdown button {

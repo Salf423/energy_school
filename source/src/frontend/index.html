@@ -32,6 +32,14 @@
             <strong>Aviso de IA:</strong> Texto de prueba.
         </div>
 
+        <!-- Controles del Dashboard -->
+        <div class="dashboard-controls animate-on-scroll" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h3 style="margin: 0; color: var(--color-cian-electrico);">Dispositivos y Zonas</h3>
+            <button id="btn-open-create-modal" style="font-size: 0.9rem; padding: 0.5em 1.5em; color: var(--color-verde-neon);">
+                <span></span>+ Enlazar Salón
+            </button>
+        </div>
+
         <!-- Grid de Salones (Generado dinámicamente desde Supabase) -->
         <div class="grid-dashboard" id="dashboard-grid">
             <p style="text-align: center; color: var(--color-cian-electrico); grid-column: 1 / -1;">
@@ -71,6 +79,24 @@
             <div class="modal-controls">
                 <button id="modal-btn-on" style="color: var(--color-cian-electrico);"><span></span>Encender Todo</button>
                 <button id="modal-btn-off" class="btn-alert"><span></span>Apagar Todo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Agregar Salón -->
+    <div id="create-room-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 400px;">
+            <button class="modal-close" id="close-create-modal">&times;<span>Cerrar</span></button>
+            <h3 class="modal-title">Enlazar Nuevo Salón</h3>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 1.5rem;">Crea el registro en la base de datos para obtener un ID único que conectarás con el microcontrolador.</p>
+            
+            <div class="form-group">
+                <label for="new-room-name">Nombre del Salón / Zona</label>
+                <input type="text" id="new-room-name" class="form-control" placeholder="Ej: Laboratorio Física 1" required>
+            </div>
+            
+            <div class="modal-controls">
+                <button id="modal-btn-create" style="width: 100%;"><span></span>Crear y Generar ID</button>
             </div>
         </div>
     </div>

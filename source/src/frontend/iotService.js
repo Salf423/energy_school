@@ -47,6 +47,26 @@ const iotService = {
     },
 
     /**
+     * @function createSalon
+     * @purpose Crea un nuevo salón en la base de datos.
+     * @param {string} nombre - Nombre del nuevo salón.
+     */
+    async createSalon(nombre) {
+        try {
+            const { data, error } = await window.supabaseClient
+                .from('salones')
+                .insert([{ nombre }])
+                .select();
+            
+            if (error) throw error;
+            return { data: data[0], error: null };
+        } catch (error) {
+            console.error('Error creando salón:', error.message);
+            return { data: null, error };
+        }
+    },
+
+    /**
      * @function getRealTimeStats
      * @purpose Se suscribe a los cambios en la tabla 'salones' para actualizar el dashboard.
      * @param {Function} callback - Función que se ejecuta al recibir un cambio.

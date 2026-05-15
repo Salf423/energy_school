@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar simulación de consumo fantasma
     initGhostConsumptionSimulation();
+
+    // Inicializar Modal de Creación de Salones
+    initCreateRoomModal();
 });
 
 /**
@@ -220,6 +223,50 @@ function initModalEvents() {
 }
 
 /**
+ * @function initCreateRoomModal
+ * @purpose Controla la apertura del modal y la creación de nuevos salones en BD.
+ */
+function initCreateRoomModal() {
+    const modal = document.getElementById('create-room-modal');
+    const btnOpen = document.getElementById('btn-open-create-modal');
+    const btnClose = document.getElementById('close-create-modal');
+    const btnCreate = document.getElementById('modal-btn-create');
+    const inputName = document.getElementById('new-room-name');
+
+    if (!modal || !btnOpen || !btnCreate) return;
+
+    btnOpen.addEventListener('click', () => {
+        inputName.value = ''; // Limpiar input
+        modal.classList.add('active');
+    });
+
+    btnClose.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+
+    btnCreate.addEventListener('click', async () => {
+        const nombre = inputName.value.trim();
+        if (!nombre) {
+            alert('Por favor ingresa un nombre para el salón.');
+            return;
+        }
+
+        btnCreate.innerHTML = 'Creando...';
+        const { data, error } = await window.iotService.createSalon(nombre);
+        btnCreate.innerHTML = '<span></span>Crear y Generar ID';
+
+        if (error) {
+            alert('Error al crear el salón: ' + error.message);
+        } else {
+            modal.classList.remove('active');
+            // Recargar la lista de salones para mostrar el nuevo
+            loadSalones();
+        }
+    });
+}
+
+/**
  * @function updateNavigation
  * @purpose Maneja la visibilidad de elementos del menú y el perfil de usuario.
  */
@@ -249,11 +296,13 @@ function updateNavigation() {
                 <div class="user-dropdown" id="user-dropdown-menu">
                     <div class="dropdown-header">
                         <p style="margin-bottom: 0.2rem;">Sesión iniciada como</p>
-                        <h5 style="margin: 0;">admin@energyschool.edu</h5>
-                        <span style="font-size: 0.75rem; color: var(--color-cian-electrico); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: block; margin-top: 5px;">Administrador</span>
+                        <h5 style="margin: 0;" title="administrador_principal_proyecto_energy@energyschool.edu.mx">administrador_principal_proyecto_energy@energyschool.edu.mx</h5>
+                        <span style="font-size: 0.75rem; color: var(--color-cian-electrico); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: block; margin-top: 5px;">Administrador IoT</span>
                     </div>
-                    <a href="#">Mi Perfil</a>
-                    <a href="#">Configuración</a>
+                    <a href="#">👤 Mi Perfil</a>
+                    <a href="#">⚙️ Configuración</a>
+                    <a href="#">🔌 Dispositivos</a>
+                    <a href="#">👥 Usuarios y Accesos</a>
                     <button id="logout-btn" class="logout-link">Cerrar Sesión</button>
                 </div>
             </div>
