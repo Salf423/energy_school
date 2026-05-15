@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializar Modal de Creación de Salones
     initCreateRoomModal();
+
+    // Inicializar Modal para Enlazar IoT
+    initLinkRoomModal();
 });
 
 /**
@@ -267,6 +270,58 @@ function initCreateRoomModal() {
 }
 
 /**
+ * @function initLinkRoomModal
+ * @purpose Controla la apertura del modal para enlazar hardware a un salón.
+ */
+function initLinkRoomModal() {
+    const modal = document.getElementById('link-room-modal');
+    const btnOpen = document.getElementById('btn-open-link-modal');
+    const btnClose = document.getElementById('close-link-modal');
+    const selectRoom = document.getElementById('link-room-select');
+    const btnLinkManual = document.getElementById('modal-btn-link-manual');
+
+    if (!modal || !btnOpen || !btnClose) return;
+
+    btnOpen.addEventListener('click', async () => {
+        // Mostrar modal y estado de carga en el select
+        selectRoom.innerHTML = '<option value="">Cargando salones...</option>';
+        modal.classList.add('active');
+
+        // Cargar los salones desde la base de datos
+        const { data: salones } = await window.iotService.getSalones();
+        
+        selectRoom.innerHTML = '<option value="">-- Selecciona un salón --</option>';
+        if (salones && salones.length > 0) {
+            salones.forEach(salon => {
+                const option = document.createElement('option');
+                option.value = salon.id;
+                option.textContent = `${salon.nombre} (ID: ${salon.id.split('-')[0]}...)`;
+                selectRoom.appendChild(option);
+            });
+        } else {
+            selectRoom.innerHTML = '<option value="">No hay salones creados</option>';
+        }
+    });
+
+    btnClose.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+
+    btnLinkManual.addEventListener('click', () => {
+        const selectedId = selectRoom.value;
+        if (!selectedId) {
+            alert('Por favor selecciona un salón para enlazar el dispositivo.');
+            return;
+        }
+        
+        // Simular que te da instrucciones de enlace manual
+        alert(`Para enlazar el microcontrolador, ingresa el siguiente UUID en el código de C++ del ESP32:\n\n${selectedId}\n\n(Esta acción quedará a la espera de la primera lectura de MQTT)`);
+        modal.classList.remove('active');
+    });
+}
+
+/**
  * @function updateNavigation
  * @purpose Maneja la visibilidad de elementos del menú y el perfil de usuario.
  */
@@ -299,10 +354,10 @@ function updateNavigation() {
                         <h5 style="margin: 0;" title="administrador_principal_proyecto_energy@energyschool.edu.mx">administrador_principal_proyecto_energy@energyschool.edu.mx</h5>
                         <span style="font-size: 0.75rem; color: var(--color-cian-electrico); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: block; margin-top: 5px;">Administrador IoT</span>
                     </div>
-                    <a href="#">👤 Mi Perfil</a>
-                    <a href="#">⚙️ Configuración</a>
-                    <a href="#">🔌 Dispositivos</a>
-                    <a href="#">👥 Usuarios y Accesos</a>
+                    <a href="#">Perfil</a>
+                    <a href="#">Configuración</a>
+                    <a href="#">Dispositivos</a>
+                    <a href="#">Usuarios y Accesos</a>
                     <button id="logout-btn" class="logout-link">Cerrar Sesión</button>
                 </div>
             </div>

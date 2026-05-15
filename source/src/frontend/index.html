@@ -35,9 +35,14 @@
         <!-- Controles del Dashboard -->
         <div class="dashboard-controls animate-on-scroll" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <h3 style="margin: 0; color: var(--color-cian-electrico);">Dispositivos y Zonas</h3>
-            <button id="btn-open-create-modal" style="font-size: 0.9rem; padding: 0.5em 1.5em; color: var(--color-verde-neon);">
-                <span></span>+ Enlazar Salón
-            </button>
+            <div style="display: flex; gap: 10px;">
+                <button id="btn-open-link-modal" style="font-size: 0.9rem; padding: 0.5em 1.5em; color: var(--color-cian-electrico);">
+                    <span></span>🔌 Enlazar Dispositivo
+                </button>
+                <button id="btn-open-create-modal" style="font-size: 0.9rem; padding: 0.5em 1.5em; color: var(--color-verde-neon);">
+                    <span></span>+ Crear Salón
+                </button>
+            </div>
         </div>
 
         <!-- Grid de Salones (Generado dinámicamente desde Supabase) -->
@@ -87,7 +92,7 @@
     <div id="create-room-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 400px;">
             <button class="modal-close" id="close-create-modal">&times;<span>Cerrar</span></button>
-            <h3 class="modal-title">Enlazar Nuevo Salón</h3>
+            <h3 class="modal-title">Crear Nuevo Salón</h3>
             <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 1.5rem;">Crea el registro en la base de datos para obtener un ID único que conectarás con el microcontrolador.</p>
             
             <div class="form-group">
@@ -97,6 +102,41 @@
             
             <div class="modal-controls">
                 <button id="modal-btn-create" style="width: 100%;"><span></span>Crear y Generar ID</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Enlazar Salón (IoT) -->
+    <div id="link-room-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 450px;">
+            <button class="modal-close" id="close-link-modal">&times;<span>Cerrar</span></button>
+            <h3 class="modal-title">Enlazar Dispositivo IoT</h3>
+            
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 1.5rem;">
+                Conecta un microcontrolador ESP32 a un salón registrado para iniciar la telemetría en tiempo real.
+            </p>
+            
+            <div class="form-group">
+                <label for="link-room-select">Selecciona el Salón</label>
+                <select id="link-room-select" class="form-control" style="background-color: rgba(255, 255, 255, 0.05); color: white;">
+                    <option value="">Cargando salones...</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="margin-top: 1.5rem; text-align: center; padding: 1.5rem; border: 1px dashed rgba(0, 210, 255, 0.3); border-radius: 8px;">
+                <p style="color: var(--color-cian-electrico); margin-bottom: 1rem;"><strong>Detección Automática IoT</strong></p>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">Buscando microcontroladores en modo emparejamiento...</p>
+                
+                <!-- Animación Radar IoT Placeholder -->
+                <div style="width: 40px; height: 40px; border: 3px solid rgba(0, 210, 255, 0.2); border-top-color: var(--color-cian-electrico); border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
+                
+                <p style="font-size: 0.8rem; color: #555; margin-top: 1rem;">
+                    <em>(Funcionalidad reservada para la integración final de hardware)</em>
+                </p>
+            </div>
+            
+            <div class="modal-controls">
+                <button id="modal-btn-link-manual" style="width: 100%;"><span></span>Conexión Manual</button>
             </div>
         </div>
     </div>
