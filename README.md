@@ -2,7 +2,7 @@
 
 > Plataforma de optimización energética escolar que monitorea en tiempo real el consumo eléctrico, envía alertas por desperdicio, permite control remoto de dispositivos y utiliza IA para aprender horarios y optimizar el uso de energía.
 
-## 🚀 Tecnologías (Stack Tecnológico)
+## Tecnologías (Stack Tecnológico)
 
 - **Frontend:** HTML5, CSS3 (Custom Properties para variables de tema oscuro y sustentabilidad), JavaScript Modular.
 - **Backend:** Node.js, Express.
@@ -10,7 +10,7 @@
 - **Inteligencia Artificial:** Python/TensorFlow (módulo `/src/ai`) para aprendizaje de hábitos y predicciones.
 - **Diseño:** UI/UX Glossy, minimalista y de contraste neón.
 
-## 📂 Estructura del Repositorio
+## Estructura del Repositorio
 
 \`\`\`text
 .
@@ -31,7 +31,7 @@
 └── README.md # Documentación principal del proyecto
 \`\`\`
 
-## 🛠 Guía de Instalación
+## Guía de Instalación
 
 1.  **Clonar el repositorio:**
     \`\`\`bash
@@ -80,7 +80,7 @@
 
 ---
 
-## ⚠️ Aclaraciones Técnicas Importantes
+## Aclaraciones Técnicas Importantes
 
 ### 1. Credenciales de HiveMQ Cloud (Crítico)
 Existe una distinción importante entre los dos tipos de credenciales en HiveMQ:
